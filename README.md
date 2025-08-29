@@ -1,66 +1,26 @@
-## Foundry
+# Fractional Ownership Protocol
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A decentralized protocol for fractional ownership of assets using Ethereum and Chainlink price feeds.
 
-Foundry consists of:
+## Overview
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+This project enables users to pool ETH contributions and receive fractional ownership tokens based on USD value. Each token represents $1 USD of contributed value, powered by Chainlink's decentralized price oracles.
 
-## Documentation
+## Features
 
-https://book.getfoundry.sh/
+- **USD-Based Token Minting**: 1 Token = $1 USD contributed
+- **Chainlink Price Feeds**: Real-time ETH/USD conversion
+- **ERC-20 Tokens**: Standard fractional ownership shares
+- **Multi-Chain Support**: Deploys to Mainnet, Sepolia, and local networks
 
-## Usage
+## Contracts
 
-### Build
+- `FractionalOwnership.sol`: Main contract handling contributions and token minting
+- `FractionalOwnershipToken.sol`: ERC-20 token representing ownership shares
 
-```shell
-$ forge build
-```
+## Development
 
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+### Setup
+```bash
+forge install
+forge build
