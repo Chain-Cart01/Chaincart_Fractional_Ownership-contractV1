@@ -24,7 +24,7 @@ contract FractionalOwnershipToken is ERC20 {
     }
 
     // CONSTRUCTOR
-    constructor() ERC20("FractionOwnerToken", "FOT") {
+    constructor() ERC20("ChainCart Token", "CC_Shares") {
         i_fractionalOwnershipContract = msg.sender;
     }
 
