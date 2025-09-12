@@ -12,7 +12,7 @@ import {FractionalOwnershipToken} from "./FractionalOwnershipToken.sol";
 /**
  * @title EnhancedFractionalOwnership
  * @author SALAMI SELIM 
- * @notice Multi-token fractional ownership with fiat integration support
+ * @notice Multi-token fractional ownership with fiat integration support 
  * @dev Accepts ETH, USDT, USDC and supports fiat on-ramp integration
  */ 
 contract FractionalOwnership is ReentrancyGuard, Pausable, AccessControl {
@@ -359,35 +359,43 @@ contract FractionalOwnership is ReentrancyGuard, Pausable, AccessControl {
      * @notice Add support for a new stablecoin
      */
     function addStablecoin(
-        address token,
-        uint8 decimals,
-        address priceFeed
-    ) 
-        external 
-        onlyRole(ADMIN_ROLE) 
-    {
-        require(!supportedStablecoins[token].isSupported, "Already supported");
-        
-        supportedStablecoins[token] = StablecoinInfo({
-            isSupported: true,
-            decimals: decimals,
-            priceFeed: AggregatorV3Interface(priceFeed)
-        });
-        
-        stablecoinList.push(token);
-        emit StablecoinAdded(token, decimals);
+    address token,
+    uint8 decimals,
+    address priceFeed
+) 
+    external 
+    onlyRole(ADMIN_ROLE) 
+{
+    if (token == address(0)) {
+        revert InvalidAddress();
     }
+    
+    require(!supportedStablecoins[token].isSupported, "Already supported");
+    
+    supportedStablecoins[token] = StablecoinInfo({
+        isSupported: true,
+        decimals: decimals,
+        priceFeed: AggregatorV3Interface(priceFeed)
+    });
+    
+    stablecoinList.push(token);
+    emit StablecoinAdded(token, decimals);
+}
 
     /**
      * @notice Remove stablecoin support
      */
     function removeStablecoin(address token) 
-        external 
-        onlyRole(ADMIN_ROLE) 
+    external 
+    onlyRole(ADMIN_ROLE) 
     {
-        supportedStablecoins[token].isSupported = false;
-        emit StablecoinRemoved(token);
+    if (!supportedStablecoins[token].isSupported) {
+        revert TokenNotSupported();
     }
+    
+    supportedStablecoins[token].isSupported = false;
+    emit StablecoinRemoved(token);
+   }
 
     /**
      * @notice Pause contract
